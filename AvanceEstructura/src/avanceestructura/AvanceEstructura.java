@@ -17,7 +17,7 @@ public class AvanceEstructura {
         // TODO code application logic here
         JuegoPokemon juego = new JuegoPokemon();
         juego.iniciarJuego();
-        
+        //
     }
 }
 
