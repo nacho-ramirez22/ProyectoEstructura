@@ -6,9 +6,9 @@ package avanceestructura;
 
 /**
  *
- * @author User
+ * @author USUARIO
  */
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class JuegoPokemon {
@@ -26,7 +26,7 @@ public class JuegoPokemon {
         seleccionarPokemonJugador();
         asignarPokemonAleatorioCPU();
 
-        System.out.println("Â¡Comienza la batalla!");
+        System.out.println("¡Comienza la batalla!");
 
         Pokemon pokemonJugador = seleccionarPokemonBatallaJugador();
         Pokemon pokemonCPU = pokedexCPU[0];
@@ -34,9 +34,9 @@ public class JuegoPokemon {
         batallaPokemon(pokemonJugador, pokemonCPU);
 
         if (pokemonJugador.getHP() > 0) {
-            System.out.println("Â¡Felicidades! Has ganado la batalla.");
+            System.out.println("¡Felicidades! Has ganado la batalla.");
         } else {
-            System.out.println("Â¡Oh no! Has perdido la batalla.");
+            System.out.println("¡Oh no! Has perdido la batalla.");
         }
     }
 
@@ -72,43 +72,46 @@ public class JuegoPokemon {
 
     private void asignarPokemonAleatorioCPU() {
         String[] nombresPokemonCPU = {"Pikachu", "Bulbasaur", "Vulpix"};
-        String[] tiposPokemonCPU = {"Normal", "Fuego", "Agua"};
-
-        Random random = new Random();
 
         for (int i = 0; i < 4; i++) {
-            int indiceAleatorio = random.nextInt(3);
-            pokedexCPU[i] = new Pokemon(nombresPokemonCPU[indiceAleatorio], tiposPokemonCPU[indiceAleatorio], 150, 50, 35, 70, 60);
+            int indiceAleatorio = (int) (Math.random() * nombresPokemonCPU.length);
+            pokedexCPU[i] = new Pokemon(nombresPokemonCPU[indiceAleatorio], obtenerTipoAleatorio(), 150, 50, 35, 70, 60);
         }
+    }
+
+    private String obtenerTipoAleatorio() {
+        String[] tiposPokemonCPU = {"Normal", "Fuego", "Agua"};
+        int indiceAleatorio = (int) (Math.random() * tiposPokemonCPU.length);
+        return tiposPokemonCPU[indiceAleatorio];
     }
 
     private void batallaPokemon(Pokemon pokemonJugador, Pokemon pokemonCPU) {
         boolean turnoJugador = true;
+        Scanner scanner = new Scanner(System.in);
 
         while (pokemonJugador.getHP() > 0 && pokemonCPU.getHP() > 0) {
             if (turnoJugador) {
-                System.out.println("Â¡Es el turno del jugador!");
-                System.out.println("Elige una accion:");
+                System.out.println("¡Es el turno del jugador!");
+                System.out.println("Elige una acción:");
                 System.out.println("1. Atacar");
                 System.out.println("2. Cambiar de Pokemon");
-                System.out.print("Elige una opciÃ³n: ");
+                System.out.print("Elige una opción: ");
 
-                Scanner scanner = new Scanner(System.in);
-                int opcion = scanner.nextInt();
+                int opcion = obtenerNumeroEntero(scanner);
 
                 if (opcion == 1) {
                     int danio = calcularDanio(pokemonJugador, pokemonCPU);
                     pokemonJugador.atacar(pokemonCPU, danio);
-                    System.out.println("El Pokemon del jugador ataco al Pokemon del oponente y le causo " + danio + " de dano.");
+                    System.out.println("El Pokemon del jugador atacó al Pokemon del oponente y le causó " + danio + " de daño.");
                 } else if (opcion == 2) {
                     System.out.println("Selecciona un Pokemon para la batalla:");
                     pokemonJugador = seleccionarPokemonBatallaJugador();
                 }
             } else {
-                System.out.println("Â¡Es el turno del oponente (CPU)!");
+                System.out.println("¡Es el turno del oponente (CPU)!");
                 int danio = calcularDanio(pokemonCPU, pokemonJugador);
                 pokemonCPU.atacar(pokemonJugador, danio);
-                System.out.println("El Pokemon del oponente ataco al PokÃ©mon del jugador y le causo " + danio + " de dano.");
+                System.out.println("El Pokemon del oponente atacó al Pokemon del jugador y le causó " + danio + " de daño.");
             }
 
             System.out.println("Vida restante del Pokemon del jugador: " + pokemonJugador.getHP());
@@ -126,8 +129,8 @@ public class JuegoPokemon {
             System.out.println("1. Rattata (Normal)");
             System.out.println("2. Charmander (Fuego)");
             System.out.println("3. Squirtle (Agua)");
-            System.out.print("Elige el numero del Pokemon: ");
-            indicePokemon = scanner.nextInt() - 1;
+            System.out.print("Elige el número del Pokemon: ");
+            indicePokemon = obtenerNumeroEntero(scanner) - 1;
         } while (indicePokemon < 0 || indicePokemon >= pokedexJugador.length || pokedexJugador[indicePokemon] == null);
 
         return pokedexJugador[indicePokemon];
@@ -147,6 +150,19 @@ public class JuegoPokemon {
         }
 
         return danio;
+    }
+
+    private int obtenerNumeroEntero(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Error: Ingresa un número válido.");
+            scanner.next();
+        }
+        return scanner.nextInt();
+    }
+
+    public static void main(String[] args) {
+        JuegoPokemon juego = new JuegoPokemon();
+        juego.iniciarJuego();
     }
 }
 
