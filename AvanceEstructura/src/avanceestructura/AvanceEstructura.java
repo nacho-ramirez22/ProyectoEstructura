@@ -18,6 +18,7 @@ public class AvanceEstructura {
         JuegoPokemon juego = new JuegoPokemon();
         juego.iniciarJuego();
         //dfr
+        //?f
     }
 }
 
