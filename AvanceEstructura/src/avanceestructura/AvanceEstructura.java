@@ -6,7 +6,7 @@ package avanceestructura;
 
 /**
  *
- * @author User
+ * @author Camila
  */
 public class AvanceEstructura {
 
@@ -17,7 +17,6 @@ public class AvanceEstructura {
         // TODO code application logic here
         JuegoPokemon juego = new JuegoPokemon();
         juego.iniciarJuego();
-        //fff
     }
 }
 
