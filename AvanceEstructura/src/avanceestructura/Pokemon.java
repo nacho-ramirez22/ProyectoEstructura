@@ -6,9 +6,9 @@ package avanceestructura;
 
 /**
  *
- * @author User
+ * @author Camila
  */
-public class Pokemon {
+class Pokemon {
     private String nombre;
     private String tipo;
     private int hp;
@@ -51,7 +51,19 @@ public class Pokemon {
     }
 
     int getAtaque() {
-        return 0;
+        return ataque;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "nombre='" + nombre + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", hp=" + hp +
+                ", ataque=" + ataque +
+                ", defensa=" + defensa +
+                ", ataqueEspecial=" + ataqueEspecial +
+                ", defensaEspecial=" + defensaEspecial +
+                '}';
     }
 }
-
