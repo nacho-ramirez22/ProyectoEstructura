@@ -6,18 +6,79 @@ package avanceestructura;
 
 /**
  *
- * @author USUARIO
+ * @author camila
  */
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.Scanner;
 
 public class JuegoPokemon {
     private Pokemon[] pokedexJugador;
     private Pokemon[] pokedexCPU;
+    private Pokemon[] pokemonPool;
 
+    private JFrame mainFrame;
     public JuegoPokemon() {
         pokedexJugador = new Pokemon[4];
-        pokedexCPU = new Pokemon[4];
+
+        pokemonPool = new Pokemon[8];
+        this.generarPokemonPool();
+        pokedexCPU =this.generateRandomPokedex(pokemonPool,4);
+        System.out.println("Pokedex del CPU: ");
+        for (int i = 0; i < pokedexCPU.length ; i++) {
+            System.out.println(pokedexCPU[i]);
+        }
+        mainFrame = new JFrame("Juego Pokemon");
+        mainFrame.setSize(200, 150);
+        mainFrame.setLayout(new FlowLayout());
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JButton btnComenzar = new JButton("Comenzar");
+        JButton btnSalir = new JButton("Salir");
+
+        Dimension dimension = new Dimension(120,40);
+        btnComenzar.setPreferredSize(dimension);
+        btnSalir.setPreferredSize(dimension);
+
+        btnSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.dispose();
+            }
+        });
+        btnComenzar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.dispose();
+                JFrame menu = new JFrame("Menu Principal");
+                menu.setSize(200, 150);
+                menu.setLayout(new FlowLayout());
+                menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JButton btnPokedex = new JButton("Generar Pokedex");
+                JButton btnBatalla = new JButton("Batallar");
+                JButton btnSalir_2 = new JButton("Salir");
+
+                btnSalir_2.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        menu.dispose();
+                    }
+                });
+                menu.add(btnPokedex);
+                menu.add(btnBatalla);
+                menu.add(btnSalir_2);
+
+                menu.setVisible(true);
+            }
+        });
+
+        mainFrame.add(btnComenzar);
+        mainFrame.add(btnSalir);
+
+        mainFrame.setVisible(true);
     }
 
     public void iniciarJuego() {
@@ -68,6 +129,18 @@ public class JuegoPokemon {
                     break;
             }
         }
+    }
+    public void generarPokemonPool() {
+        this.pokemonPool[0] = new Pokemon("Squirtle", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[1] = new Pokemon("Charmander", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[2] = new Pokemon("Totodile", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[3] = new Pokemon("Wartotle", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[4] = new Pokemon("Blastoise", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[5] = new Pokemon("Psyduck", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[6] = new Pokemon("Golduck", "Agua", 190, 55, 45, 75, 65);
+        this.pokemonPool[7] = new Pokemon("Poliwag", "Agua", 190, 55, 45, 75, 65);
+
+       
     }
 
     private void asignarPokemonAleatorioCPU() {
@@ -159,10 +232,35 @@ public class JuegoPokemon {
         }
         return scanner.nextInt();
     }
-
-    public static void main(String[] args) {
-        JuegoPokemon juego = new JuegoPokemon();
-        juego.iniciarJuego();
+    private Pokemon[] generateRandomPokedex(Pokemon[] pokemonPool, final int MAX_POKEMON) {
+        Random randomizer = new Random();
+        Pokemon[] randomPokemons = new Pokemon[MAX_POKEMON]; // Crea una lista de N Pokemons (MAX_POKEMON, 4)
+        int[] usados = new int[MAX_POKEMON];
+        int counter = 0;
+        // Mientras la lista no llegue a MAX_Pokemon (4)
+        while (counter < MAX_POKEMON) {
+            // Numero random
+            int poolIndex = randomizer.nextInt(pokemonPool.length);
+            boolean usado = false;
+            // Se busca si el numero ya se uso, para no repetirlo
+            for (int index = 0; index < usados.length ; index++) {
+                if (usados[index] == poolIndex) {
+                    usado = true;
+                }
+            }
+            // Si no ha sido usado, se agrega
+            if (!usado) {
+                randomPokemons[counter] = pokemonPool[poolIndex];
+                usados[counter] = poolIndex;
+                counter++;
+            }
+        }
+        // Se retorna
+        return randomPokemons;
     }
+
+    
 }
+
+
 
