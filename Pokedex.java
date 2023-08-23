@@ -1,5 +1,4 @@
 package pokemon;
-// Pokedex
 import common.PokemonList;
 
 public class Pokedex {
@@ -29,21 +28,29 @@ public class Pokedex {
   }
   public boolean addPokemon(AbstractPokemon pokemon) {
     if (this.size < capacity) {
-      this.pokemons.add(pokemon);
+      this.pokemons.addItem(pokemon);
       this.size++;
       return true;
     }
     return false;
   }
   public void clear() {
-    this.pokemons.clearList();
+    this.pokemons.clearItemList();
   }
   public AbstractPokemon getPokemon(int index) {
-    return this.pokemons.getElement(index);
+    return this.pokemons.getItem(index);
   }
   public AbstractPokemon getPokemon(String name) {
-    for (int index = 0; index < this.pokemons.getSize() ; index++) {
+    for (int index = 0; index < this.pokemons.getItemCount() ; index++) {
       if (this.getPokemon(index).getName().equals(name)) {
+        return this.getPokemon(index);
+      }
+    }
+    return null;
+  }
+  public AbstractPokemon getNextPokemon() {
+    for (int index = 0; index < this.pokemons.getItemCount() ; index++) {
+      if ( !(this.getPokemon(index).isDefeatd)) {
         return this.getPokemon(index);
       }
     }
