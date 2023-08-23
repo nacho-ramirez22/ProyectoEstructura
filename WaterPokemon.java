@@ -1,6 +1,6 @@
 package pokemon;
 
-import common.GenericList;
+import common.DynamicList;
 
 public class WaterPokemon extends AbstractPokemon{
 
@@ -16,11 +16,30 @@ public class WaterPokemon extends AbstractPokemon{
     this.specialAttack = 75;
     this.specialDefense = 65;
 
-    this.weakness = new GenericList<>();
-    this.strenghts = new GenericList<>();
+    this.weakness = new DynamicList<>();
+    this.strenghts = new DynamicList<>();
 
-    weakness.add(PokemonType.NORMAL_TYPE);
-    strenghts.add(PokemonType.FIRE_TYPE);
+    weakness.addItem(PokemonType.NORMAL_TYPE);
+    strenghts.addItem(PokemonType.FIRE_TYPE);
+  }
+
+  public WaterPokemon(AbstractPokemon abstractPokemon) {
+    super(abstractPokemon.name, true);
+    this.type = PokemonType.WATER_TYPE;
+
+    this.baseHP = 190;
+    this.actualHP = baseHP;
+
+    this.attack = 55;
+    this.defense = 45;
+    this.specialAttack = 75;
+    this.specialDefense = 65;
+
+    this.weakness = new DynamicList<>();
+    this.strenghts = new DynamicList<>();
+
+    weakness.addItem(PokemonType.NORMAL_TYPE);
+    strenghts.addItem(PokemonType.FIRE_TYPE);
   }
 
   @Override
