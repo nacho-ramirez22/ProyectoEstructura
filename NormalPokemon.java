@@ -1,6 +1,6 @@
 package pokemon;
 
-import common.GenericList;
+import common.DynamicList;
 
 public class NormalPokemon extends AbstractPokemon{
   public NormalPokemon(String name, boolean haveIconImage) {
@@ -15,12 +15,32 @@ public class NormalPokemon extends AbstractPokemon{
     this.specialAttack = 70;
     this.specialDefense = 60;
 
-    this.weakness = new GenericList<>();
-    this.strenghts = new GenericList<>();
+    this.weakness = new DynamicList<>();
+    this.strenghts = new DynamicList<>();
 
-    weakness.add(PokemonType.FIRE_TYPE);
-    strenghts.add(PokemonType.WATER_TYPE);
+    weakness.addItem(PokemonType.FIRE_TYPE);
+    strenghts.addItem(PokemonType.WATER_TYPE);
   }
+
+  public NormalPokemon(AbstractPokemon abstractPokemon) {
+    super(abstractPokemon.name, true);
+    this.type = PokemonType.NORMAL_TYPE;
+
+    this.baseHP = 150;
+    this.actualHP = baseHP;
+
+    this.attack = 50;
+    this.defense = 35;
+    this.specialAttack = 70;
+    this.specialDefense = 60;
+
+    this.weakness = new DynamicList<>();
+    this.strenghts = new DynamicList<>();
+
+    weakness.addItem(PokemonType.FIRE_TYPE);
+    strenghts.addItem(PokemonType.WATER_TYPE);
+  }
+
   @Override
   public boolean updateStats(AbstractPokemon rival) {
     if (rival.getType() == PokemonType.WATER_TYPE) {
@@ -39,3 +59,4 @@ public class NormalPokemon extends AbstractPokemon{
     return false;
   }
 }
+
