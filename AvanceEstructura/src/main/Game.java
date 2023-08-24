@@ -17,10 +17,11 @@ public class Game {
     public static Game instance;
     Pokedex cpuPokedex;
     Pokedex userPokedex;
-    PokemonList pokemonPool;
+    PokemonList pokemonPool; // Lista de Pokémon disponibles para el juego
     PantallaCombate pantallaCombate;
     PantallaFinal pantallaFinal;
 
+    //constructor 
     public Game() {
         instance = this;
 
@@ -69,20 +70,20 @@ public class Game {
     }
 
     private Pokedex generateRandomPokedex(DynamicList<AbstractPokemon> pokemonPool, final int MAX_POKEMON) {
-        Random randomizer = new Random();
-        Pokedex randomPokemons = new Pokedex(4);
-        DynamicList<Integer> usedIndices = new DynamicList<>();
+        Random randomizer = new Random(); // Creación de una instancia de Random 
+        Pokedex randomPokemons = new Pokedex(4); //creación de una instancia de Pokedex con un tamaño inicial de 4.
+        DynamicList<Integer> usedIndices = new DynamicList<>(); // Creación de una lista para mantener un seguimiento de los índices utilizados
         int counter = 0;
 
         while (counter < MAX_POKEMON) {
-            int poolIndex = randomizer.nextInt(pokemonPool.getItemCount());
-            boolean used = usedIndices.containsItem(poolIndex);
+            int poolIndex = randomizer.nextInt(pokemonPool.getItemCount()); // Genera un índice aleatorio en el rango de la lista de Pokémon
+            boolean used = usedIndices.containsItem(poolIndex); // Verifica si ya ha sido utilizado
 
             if (!used) {
-                AbstractPokemon selectedPokemon = pokemonPool.getItem(poolIndex);
-                AbstractPokemon copiedPokemon = copyPokemon(selectedPokemon); // Make a copy
-                randomPokemons.addPokemon(copiedPokemon);
-                usedIndices.addItem(poolIndex);
+                AbstractPokemon selectedPokemon = pokemonPool.getItem(poolIndex); // Obtiene el Pokémon seleccionado desde la lista
+                AbstractPokemon copiedPokemon = copyPokemon(selectedPokemon); // Hace una copia
+                randomPokemons.addPokemon(copiedPokemon); // Agrega el Pokémon copiado a la Pokedex aleatoria
+                usedIndices.addItem(poolIndex); // Marca el índice como utilizado
                 counter++;
             }
         }
@@ -90,6 +91,7 @@ public class Game {
         return randomPokemons;
     }
 
+    //esto es para que el pokemon de user y pokemon cpu no sea el mismo
     public AbstractPokemon copyPokemon(AbstractPokemon abstractPokemon) {
         switch (abstractPokemon.getType()) {
             case WATER_TYPE -> {
@@ -104,6 +106,7 @@ public class Game {
         }
     }
 
+   //pokedex user
     private void generateUserPokedex(int MAX_POKEMON) {
         JFrame frame = new JFrame();
         frame.setSize(750, 750);
@@ -130,6 +133,7 @@ public class Game {
         pantallaFinal.setVisible(true);
     }
 
+     //getter and setter
     public void setUserPokedex(Pokedex userPokedex) {
         this.userPokedex = userPokedex;
     }
